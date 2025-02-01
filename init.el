@@ -51,9 +51,12 @@
   :ensure t
   :bind (("C-\\" . 'neotree-toggle))) ; atalho pra arvore de arquivo
 
-(use-package magit
-  :ensure t
-  )
+;; temas
+; lindo
+(use-package timu-spacegrey-theme
+        :ensure t
+        :config
+        (load-theme 'timu-spacegrey t))
 
 ;; coisa do melpa
 (custom-set-variables
@@ -62,10 +65,31 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit all-the-icons auto-complete try timu-spacegrey-theme neotree)))
+   '(company-lsp company lsp-pyright magit all-the-icons auto-complete try timu-spacegrey-theme neotree)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; habilitando o lsp, que torna o editor mais inteligente em questão de programação
+
+; adicionando funcionalidade de suporte as linguagens
+(use-package lsp-mode
+  :hook ((python-mode java-mode js-mode) . lsp-deferred)
+  :commands lsp)
+
+; caso eu precise no futuro, documentação etc
+; (use-package lsp-ui
+ ; :commands lsp-ui-mode)
+
+; java
+(use-package lsp-java
+  :after lsp)
+
+; python
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . lsp))
+
